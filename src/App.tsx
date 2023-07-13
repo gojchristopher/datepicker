@@ -1,26 +1,29 @@
-import "./App.css";
-import { Flex } from "@chakra-ui/react";
-import { DatePickerInput } from "./Components/DatePickerInput";
-import React from "react";
-import { Nullable } from "./types";
+import { Box, Flex } from "@chakra-ui/react";
+import { format } from "date-fns";
+import { useState } from "react";
+import { DatePickerInput } from "./DatePicker";
 
-function App() {
-  const [date, setDate] = React.useState<Nullable<Date>>();
-
-  function onChange(value: Nullable<Date>) {
-    setDate(value);
-  }
+export function App() {
+  const [value, setValue] = useState<Date>();
 
   return (
-    <Flex w="full" h="100vh" justify="center">
-      <DatePickerInput
-        placeholder="Select Date"
-        value={date}
-        label="Date"
-        onChange={onChange}
-      />
-    </Flex>
+    <Box p={8}>
+      <Flex alignItems="center" gap={2}>
+        <Box color="gray.500" fontSize="sm">
+          Selected
+        </Box>
+        <Box color="gray.600" fontWeight="medium">
+          {value ? format(value, "dd MMM yyyy") : "NA"}
+        </Box>
+      </Flex>
+
+      <Box mt={6}>
+        <DatePickerInput
+          value={value}
+          onChange={setValue}
+          placeholder="Choose date"
+        />
+      </Box>
+    </Box>
   );
 }
-
-export default App;
