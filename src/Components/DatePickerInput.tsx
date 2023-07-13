@@ -14,6 +14,7 @@ import {
 import {
   chakra,
   CloseButton,
+  Flex,
   forwardRef,
   HTMLChakraProps,
   Icon,
@@ -34,6 +35,7 @@ interface BaseProps {
   value?: Nullable<Date>;
   onChange?(newValue: Nullable<Date>): void;
   placeholder?: string;
+  label?: string;
   dateFormat?: ((value: Date) => string) | string;
   __fieldTestId?: string;
 }
@@ -52,6 +54,7 @@ export const DatePickerInput = forwardRef<DatePickerInputProps, "button">(
       onChange,
       dateFormat,
       placeholder,
+      label,
       __fieldTestId = "hds.datepicker-input",
       ...others
     },
@@ -94,7 +97,19 @@ export const DatePickerInput = forwardRef<DatePickerInputProps, "button">(
     );
 
     return (
-      <>
+      <Flex flexDir="column" w="full" align="start" gap="6px">
+        {label && (
+          <chakra.text
+            __css={{
+              fontSize: "14px",
+              fontWeight: "500",
+              lineHeight: "14px",
+              letterSpacing: "0.28px",
+            }}
+          >
+            {label}
+          </chakra.text>
+        )}
         <chakra.button
           ref={fieldRef}
           type="button"
@@ -102,6 +117,7 @@ export const DatePickerInput = forwardRef<DatePickerInputProps, "button">(
             ...css.field,
             display: "flex",
             textAlign: "left",
+            alignItems: "center",
             gap: 2,
           }}
           data-focus={truthyOrUndef(isOpen)}
@@ -166,6 +182,7 @@ export const DatePickerInput = forwardRef<DatePickerInputProps, "button">(
               <DatePicker
                 value={controlledValue}
                 colorScheme={others.colorScheme}
+                onCancel={() => setOpen(false)}
                 onChange={(newValue) => {
                   controlledOnChange(newValue);
                   setOpen(false);
@@ -179,7 +196,7 @@ export const DatePickerInput = forwardRef<DatePickerInputProps, "button">(
             </chakra.div>
           )}
         </FloatingPortal>
-      </>
+      </Flex>
     );
   }
 );

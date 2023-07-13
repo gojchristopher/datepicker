@@ -12,9 +12,11 @@ import { DAYS } from "../constants";
 import { DatePickerHeader } from "./DatePickerHeader";
 import { Nullable } from "../types";
 import { getCalendar, truthyOrUndef } from "./utils";
+import { DatePickerFooter } from "./DatePickeFooter";
 
 export interface DatePickerProps extends ThemingProps<"DatePicker"> {
   value?: Nullable<Date>;
+  onCancel?(): void;
   onChange?(selected: Nullable<Date>): void;
 }
 
@@ -62,7 +64,6 @@ export function DatePicker(props: DatePickerProps) {
                     <chakra.td key={uuid()}>
                       <CalendarItem
                         onClick={() => {
-                          onChange(obj.value);
                           setBaseDate(obj.value);
                         }}
                         data-today={truthyOrUndef(isToday)}
@@ -79,6 +80,12 @@ export function DatePicker(props: DatePickerProps) {
             ))}
           </chakra.tbody>
         </chakra.table>
+        <DatePickerFooter
+          onCancel={props.onCancel}
+          onApply={() => {
+            onChange(baseDate);
+          }}
+        />
       </CalendarContainer>
     </Container>
   );
