@@ -1,10 +1,3 @@
-export type Nullable<T> = null | T;
-
-export enum LastUpdated {
-  START,
-  UNTIL,
-}
-
 export interface CalendarObject {
   value: Date;
   isToday?: boolean;
@@ -13,18 +6,7 @@ export interface CalendarObject {
   isPreviousMonthDate?: boolean;
 }
 
-export interface RangeCalendarObject extends CalendarObject {
-  isWithinRange?: boolean;
-  isRangeStartDate?: boolean;
-  isRangeUntilDate?: boolean;
-}
-
-export interface DateRange {
-  start: Date;
-  until: Date;
-}
-
-export enum TimeAdverbial {
+export enum TimeAdverb {
   Today = "Today",
   Yesterday = "Yesterday",
   ThisWeek = "This week",
@@ -35,6 +17,29 @@ export enum TimeAdverbial {
   LastYear = "Last year",
   AllTime = "All time",
 }
+
+export type Weekday =
+  | "Sunday"
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday";
+
+export type Month =
+  | "January"
+  | "February"
+  | "March"
+  | "April"
+  | "May"
+  | "June"
+  | "July"
+  | "August"
+  | "September"
+  | "October"
+  | "November"
+  | "December";
 
 type Pretty<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
 
